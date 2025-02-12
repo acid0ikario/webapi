@@ -4,9 +4,9 @@ namespace MyProject.Application.DTOs
 {
     public class LoginRequest
     {
-        //[Required]
+        [Required]
         public string Username { get; set; } = string.Empty;
-       // [Required]
+        [Required]
         public string Password { get; set; } = string.Empty;
     }
 }

@@ -32,7 +32,6 @@ namespace MyProject.Api.Controllers
             }
             
             _logger.LogInformation("Login exitoso para: {Username}", request.Username);
-            
             return Ok(new { token });
         }
     }

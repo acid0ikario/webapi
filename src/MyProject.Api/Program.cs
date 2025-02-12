@@ -13,9 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configurar Serilog (y otros logs si es necesario)
 Log.Logger = new LoggerConfiguration()
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
+    .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
+
 builder.Host.UseSerilog();
 
 // // Configurar la cadena de conexión y EF Core

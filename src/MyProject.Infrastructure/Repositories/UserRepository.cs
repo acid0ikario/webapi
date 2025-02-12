@@ -15,9 +15,9 @@ namespace MyProject.Infrastructure.Repositories
             _context = context;
         }
         
-        public async Task<User> GetUserByUsernameAsync(string username)
+        public async Task<User?> GetUserByUsernameAsync(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return await _context.Users.FirstOrDefaultAsync(u => u != null && u.Username == username);
         }
         
         // Implementa otros métodos definidos en IUserRepository según sea necesario
