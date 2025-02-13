@@ -8,6 +8,7 @@ using MyProject.Domain.Repositories;
 using MyProject.Infrastructure.Persistence;
 using MyProject.Infrastructure.Repositories;
 using Serilog;
+using Npgsql.EntityFrameworkCore.PostgreSQL; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,10 +21,12 @@ builder.Host.UseSerilog();
 
 // // Configurar la cadena de conexión y EF Core
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// builder.Services.AddDbContext<AppDbContext>(options =>
+//     options.UseSqlServer(connectionString));
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString));
-
-
+    options.UseNpgsql(connectionString,
+        b => b.MigrationsAssembly("MyProject.Infrastructure")));
 // Configurar autenticación JWT
 var jwtKey = builder.Configuration["Jwt:Key"];
 var key = Encoding.UTF8.GetBytes(jwtKey);

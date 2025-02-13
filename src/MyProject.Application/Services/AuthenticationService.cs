@@ -18,9 +18,10 @@ namespace MyProject.Application.Services
 
         public async Task<string> AuthenticateAsync(LoginRequest request)
         {
-            if (request.Username == "admin" && request.Password == "password")
+            
+            var user = _userRepository.GetUserByUsernameAsync(request.Username, request.Password);
+            if (await user != null)
             {
-                // Si en el futuro agregas alguna llamada asíncrona, podrás awaitearla aquí
                 return _tokenService.GenerateToken(request.Username);
             }
             return null; // O lanza una excepción si la autenticación falla.
