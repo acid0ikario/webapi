@@ -11,7 +11,7 @@ namespace MyProject.Api.Controllers
         [HttpGet("status")]
         public IActionResult Status()
         {
-            return Ok(new { message = "El servicio está activo" });
+            return Ok(new { message = "El servicio está activo " });
         }
 
         [HttpGet("userinfo")]
