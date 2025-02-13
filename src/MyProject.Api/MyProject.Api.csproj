@@ -29,4 +29,10 @@
     <ProjectReference Include="..\MyProject.Infrastructure\MyProject.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="UnauthorizedBanner.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
