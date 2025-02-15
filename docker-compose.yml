@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: postgres
+    volumes:
+      # This volume maps the host folder to the container's data directory,
+      # ensuring that your database data persists even if the container stops.
+      - /home/ikario/dbapi:/var/lib/postgresql/data
+      # This volume mounts your initialization script so it runs on first creation.
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: .
+      dockerfile: src/MyProject.Api/Dockerfile
+    container_name: myproject-api
+    depends_on:
+      - postgres
+    environment:
+      # Use environment variables to override the connection string so that it points to the postgres service.
+      ConnectionStrings__DefaultConnection: "Server=postgres;Port=5432;Database=postgres;Username=myuser;Password=mypassword;"
+      ASPNETCORE_ENVIRONMENT: Production
+    ports:
+      - "80:8080"
