@@ -36,7 +36,7 @@ namespace MyProject.Api.Controllers
             return Ok(new { token });
         }
 
-         [HttpPost("createuser")]
+        [HttpPost("createuser")]
         [CustomAuthorize]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
         {
@@ -51,6 +51,14 @@ namespace MyProject.Api.Controllers
 
             _logger.LogInformation("Usuario creado exitosamente: {Username}", request.Username);
             return Ok(new { message = "Usuario creado exitosamente." });
+        }
+
+        [HttpGet("users")]
+        [CustomAuthorize]
+        public async Task<ActionResult<List<UserDto>>> GetAllUsers(int pageNumber = 1, int pageSize = 10)
+        {
+            var users = await _authService.GetAllUsersAsync(pageNumber, pageSize);
+            return Ok(users);
         }
     }
 }

@@ -39,5 +39,17 @@ namespace MyProject.Application.Services
             await _userRepository.CreateUserAsync(user);
             return _tokenService.GenerateToken(request.Username); // Optionally return a token for the new user
         }
+
+        public async Task<List<UserDto>> GetAllUsersAsync(int pageNumber, int pageSize)
+        {
+            var users = await _userRepository.GetAllUsersAsync(pageNumber, pageSize);
+            return users.Select(u => new UserDto
+            {
+                Id = u.Id,
+                Username = u.Username,
+                Password = u.Password
+                // Map other properties as needed
+            }).ToList();
+        }
     }
 }

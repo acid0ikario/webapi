@@ -15,15 +15,23 @@ namespace MyProject.Infrastructure.Repositories
             _context = context;
         }
         
-        // Implementa otros métodos definidos en IUserRepository según sea necesario
         public async Task<User?> GetUserByUsernameAsync(string username, string password)
         {
             return await _context.Users.FirstOrDefaultAsync(u =>  u.Username == username && u.Password == password);
         }
+
         public async Task CreateUserAsync(User user)
         {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<User>> GetAllUsersAsync(int pageNumber, int pageSize)
+        {
+            return await _context.Users
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
     }
 }

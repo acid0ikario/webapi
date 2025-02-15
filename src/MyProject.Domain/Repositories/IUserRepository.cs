@@ -6,7 +6,7 @@ namespace MyProject.Domain.Repositories
     public interface IUserRepository
     {
         Task<User?> GetUserByUsernameAsync(string username, string password);
-        // Aquí puedes agregar otros métodos, como CreateUserAsync, UpdateUser, etc.
         Task CreateUserAsync(User user);
+        Task<List<User>> GetAllUsersAsync(int pageNumber, int pageSize);
     }
 }
