@@ -7,5 +7,6 @@ namespace MyProject.Domain.Repositories
     {
         Task<User?> GetUserByUsernameAsync(string username, string password);
         // Aquí puedes agregar otros métodos, como CreateUserAsync, UpdateUser, etc.
+        Task CreateUserAsync(User user);
     }
 }

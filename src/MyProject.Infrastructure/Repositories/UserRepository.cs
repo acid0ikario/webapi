@@ -20,5 +20,10 @@ namespace MyProject.Infrastructure.Repositories
         {
             return await _context.Users.FirstOrDefaultAsync(u =>  u.Username == username && u.Password == password);
         }
+        public async Task CreateUserAsync(User user)
+        {
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+        }
     }
 }

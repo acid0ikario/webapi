@@ -6,5 +6,6 @@ namespace MyProject.Application.Interfaces
     public interface IAuthenticationService
     {
         Task<string> AuthenticateAsync(LoginRequest request);
+        Task<string> CreateUserAsync(CreateUserRequest request);
     }
 }

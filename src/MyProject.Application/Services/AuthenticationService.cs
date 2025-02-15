@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using MyProject.Application.DTOs;
 using MyProject.Application.Interfaces;
+using MyProject.Domain.Entities;
 using MyProject.Domain.Repositories;
 
 namespace MyProject.Application.Services
@@ -25,6 +26,18 @@ namespace MyProject.Application.Services
                 return _tokenService.GenerateToken(request.Username);
             }
             return null; // O lanza una excepción si la autenticación falla.
+        }
+
+        public async Task<string> CreateUserAsync(CreateUserRequest request)
+        {
+            var user = new User
+            {
+                Username = request.Username,
+                Password = request.Password // Consider hashing the password before storing it
+            };
+
+            await _userRepository.CreateUserAsync(user);
+            return _tokenService.GenerateToken(request.Username); // Optionally return a token for the new user
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyProject.Application.Interfaces;
 using MyProject.Application.DTOs;
+using MyProject.Api.Attributes;
 
 namespace MyProject.Api.Controllers
 {
@@ -33,6 +34,23 @@ namespace MyProject.Api.Controllers
             
             _logger.LogInformation("Login exitoso para: {Username}", request.Username);
             return Ok(new { token });
+        }
+
+         [HttpPost("createuser")]
+        [CustomAuthorize]
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
+        {
+            _logger.LogInformation("Intento de creación de usuario: {Username}", request.Username);
+
+            var result = await _authService.CreateUserAsync(request);
+            if (result == null)
+            {
+                _logger.LogWarning("Creación de usuario fallida para: {Username}", request.Username);
+                return BadRequest("Error al crear el usuario.");
+            }
+
+            _logger.LogInformation("Usuario creado exitosamente: {Username}", request.Username);
+            return Ok(new { message = "Usuario creado exitosamente." });
         }
     }
 }
