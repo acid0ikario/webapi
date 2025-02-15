@@ -50,7 +50,7 @@ namespace MyProject.Api.Controllers
             }
 
             _logger.LogInformation("Usuario creado exitosamente: {Username}", request.Username);
-            return Ok(new { message = "Usuario creado exitosamente." });
+            return Ok(new { message = "Usuario creado exitosamente:", request.Username, result });
         }
 
         [HttpGet("users")]
